@@ -89,6 +89,24 @@ Every page reads through `src/lib/data/index.ts`, so the demo and live modes beh
 Filtering happens in `src/lib/data/filters.ts` — in-memory, which is the right call at cohort
 scale and keeps demo and Supabase results consistent.
 
+## Résumé autofill
+
+`/profile` takes a PDF, Word or text résumé and pre-fills the form from it: current role,
+background group, location, LinkedIn, experience rows, skills and interests.
+
+Nothing is saved automatically — the upload only populates the form, the member reviews it, and
+their existing values survive wherever the résumé said nothing. The file itself is parsed in
+memory and never stored.
+
+Two extraction paths:
+
+| `ANTHROPIC_API_KEY` | How it works |
+| --- | --- |
+| set | Claude Opus 5 with a strict tool schema, so every value it returns is already one of the app's industries, functions, skills or interests |
+| unset | A keyword pass over the text — finds location, LinkedIn, skills and interests, and is deliberately conservative elsewhere |
+
+The Claude path falls back to keywords on any API failure, so the button always does something.
+
 ## Access control
 
 Two layers, depending on whether Supabase is connected.

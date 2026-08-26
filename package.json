@@ -11,11 +11,15 @@
     "seed:sql": "node scripts/gen-seed-sql.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.120.0",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.45.4",
+    "mammoth": "^1.12.1",
     "next": "^15.5.24",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "server-only": "^0.0.1",
+    "unpdf": "^1.8.1"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.15.13",

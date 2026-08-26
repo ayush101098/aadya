@@ -2,6 +2,8 @@
 
 import { useActionState, useState } from "react";
 import { updateProfileAction, type ActionState } from "@/app/actions";
+import { ResumeUpload } from "./ResumeUpload";
+import type { ResumeDraft } from "@/lib/resume/types";
 import { SubmitButton } from "./SubmitButton";
 import { CheckboxGroup } from "./CheckboxGroup";
 import {
@@ -32,6 +34,9 @@ function Card({ title, hint, children }: { title: string; hint?: string; childre
 
 export function ProfileEditor({ person }: { person: Person }) {
   const [state, action] = useActionState<ActionState, FormData>(updateProfileAction, {});
+  const [draft, setDraft] = useState<ResumeDraft | null>(null);
+  // Bumping the key remounts the form so uncontrolled fields pick up new defaults.
+  const [formKey, setFormKey] = useState(0);
   const [rows, setRows] = useState<Row[]>(
     person.experience.length
       ? person.experience.map(({ company, industry, function: fn, years }) => ({
@@ -43,8 +48,36 @@ export function ProfileEditor({ person }: { person: Person }) {
       : [BLANK_ROW],
   );
 
+  // Résumé values win where present; anything the résumé didn't cover keeps what's saved.
+  const value = {
+    currentRole: draft?.currentRole || person.currentRole,
+    group: draft?.group || person.group,
+    location: draft?.location || person.location,
+    bio: draft?.bio || person.bio,
+    linkedinUrl: draft?.linkedinUrl ?? person.linkedinUrl ?? "",
+    skills: draft?.skills.length ? draft.skills : person.skills,
+    interests: draft?.interests.length ? draft.interests : person.interests,
+    lookingFor: draft?.lookingFor.length ? draft.lookingFor : person.lookingFor,
+  };
+
+  function applyDraft(next: ResumeDraft) {
+    setDraft(next);
+    if (next.experience.length) {
+      setRows(next.experience.map(({ company, industry, function: fn, years }) => ({
+        company,
+        industry,
+        function: fn,
+        years,
+      })));
+    }
+    setFormKey((k) => k + 1);
+  }
+
   return (
-    <form action={action} className="space-y-4">
+    <div className="space-y-4">
+      <ResumeUpload onDraft={applyDraft} />
+
+      <form key={formKey} action={action} className="space-y-4">
       <Card title="Basics">
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="block space-y-1">
@@ -59,14 +92,14 @@ export function ProfileEditor({ person }: { person: Person }) {
             <span className="label">Current role / background</span>
             <input
               name="currentRole"
-              defaultValue={person.currentRole}
+              defaultValue={value.currentRole}
               className="input"
               placeholder="MBA Candidate • ex-Product Manager"
             />
           </label>
           <label className="block space-y-1">
             <span className="label">Background group</span>
-            <select name="group" defaultValue={person.group} className="input">
+            <select name="group" defaultValue={value.group} className="input">
               <option value="">—</option>
               {COHORT_GROUPS.map((g) => (
                 <option key={g}>{g}</option>
@@ -75,7 +108,7 @@ export function ProfileEditor({ person }: { person: Person }) {
           </label>
           <label className="block space-y-1">
             <span className="label">Location</span>
-            <select name="location" defaultValue={person.location} className="input">
+            <select name="location" defaultValue={value.location} className="input">
               <option value="">—</option>
               {LOCATIONS.map((l) => (
                 <option key={l}>{l}</option>
@@ -84,7 +117,7 @@ export function ProfileEditor({ person }: { person: Person }) {
           </label>
           <label className="block space-y-1">
             <span className="label">LinkedIn URL</span>
-            <input name="linkedinUrl" defaultValue={person.linkedinUrl ?? ""} className="input" />
+            <input name="linkedinUrl" defaultValue={value.linkedinUrl} className="input" />
           </label>
           <label className="block space-y-1">
             <span className="label">Preferred contact</span>
@@ -109,7 +142,7 @@ export function ProfileEditor({ person }: { person: Person }) {
           </label>
           <label className="block space-y-1 sm:col-span-2">
             <span className="label">Short bio</span>
-            <textarea name="bio" rows={3} defaultValue={person.bio} className="input" />
+            <textarea name="bio" rows={3} defaultValue={value.bio} className="input" />
           </label>
         </div>
       </Card>
@@ -167,15 +200,15 @@ export function ProfileEditor({ person }: { person: Person }) {
       </Card>
 
       <Card title="What I can help with" hint="This is what other students search for most.">
-        <CheckboxGroup name="skills" options={SKILLS} selected={person.skills} />
+        <CheckboxGroup name="skills" options={SKILLS} selected={value.skills} />
       </Card>
 
       <Card title="Interests">
-        <CheckboxGroup name="interests" options={INTERESTS} selected={person.interests} />
+        <CheckboxGroup name="interests" options={INTERESTS} selected={value.interests} />
       </Card>
 
       <Card title="What I'm looking for">
-        <CheckboxGroup name="lookingFor" options={LOOKING_FOR} selected={person.lookingFor} />
+        <CheckboxGroup name="lookingFor" options={LOOKING_FOR} selected={value.lookingFor} />
       </Card>
 
       <div className="sticky bottom-16 flex items-center gap-3 rounded-lg border border-ink-200 bg-white p-3 sm:bottom-4">
@@ -183,6 +216,7 @@ export function ProfileEditor({ person }: { person: Person }) {
         {state.error && <p className="text-sm text-red-600">{state.error}</p>}
         {state.ok && <p className="text-sm text-emerald-700">Profile saved.</p>}
       </div>
-    </form>
+      </form>
+    </div>
   );
 }

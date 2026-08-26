@@ -7,6 +7,9 @@ import { getCurrentUser, requireUser } from "@/lib/auth";
 import { SESSION_COOKIE, accessCode, accessMode, createSessionValue } from "@/lib/session";
 import { loadPeople } from "@/lib/data";
 import { parseTags } from "@/lib/format";
+import { extractResumeText, tidyResumeText } from "@/lib/resume/extract";
+import { parseResume } from "@/lib/resume/parse";
+import { MAX_RESUME_BYTES, type ResumeDraft } from "@/lib/resume/types";
 import {
   addMember,
   createHelpRequest,
@@ -25,6 +28,49 @@ const list = (data: FormData, key: string) =>
   data.getAll(key).map((v) => String(v).trim()).filter(Boolean);
 
 export type ActionState = { error?: string; ok?: boolean };
+
+export type ResumeState = {
+  error?: string;
+  draft?: ResumeDraft;
+  source?: "claude" | "keywords";
+  fileName?: string;
+};
+
+/**
+ * Reads an uploaded résumé and returns a draft profile for the member to review.
+ * Nothing is saved here — the draft only pre-fills the form.
+ */
+export async function parseResumeAction(
+  _prev: ResumeState,
+  formData: FormData,
+): Promise<ResumeState> {
+  await requireUser();
+
+  const file = formData.get("resume");
+  if (!(file instanceof File) || file.size === 0) {
+    return { error: "Choose a résumé file first." };
+  }
+  if (file.size > MAX_RESUME_BYTES) {
+    return { error: "That file is over 5 MB. Upload a smaller PDF or Word file." };
+  }
+
+  try {
+    const text = tidyResumeText(await extractResumeText(file));
+    if (text.length < 120) {
+      return {
+        error:
+          "Couldn't read enough text from that file — if it's a scanned PDF, try the Word version.",
+      };
+    }
+
+    const { draft, source } = await parseResume(text);
+    return { draft, source, fileName: file.name };
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Couldn't read that file.",
+    };
+  }
+}
 
 /**
  * Access gate used until Supabase auth is switched on: the email must be on the cohort
