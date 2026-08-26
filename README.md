@@ -89,6 +89,28 @@ Every page reads through `src/lib/data/index.ts`, so the demo and live modes beh
 Filtering happens in `src/lib/data/filters.ts` — in-memory, which is the right call at cohort
 scale and keeps demo and Supabase results consistent.
 
+## Access control
+
+Two layers, depending on whether Supabase is connected.
+
+**Before Supabase (where the site is now)** — an access gate: your ISB email must be on the
+cohort roster *and* you need the shared access code. A signed, HTTP-only cookie holds the
+session; every route including the landing page redirects to `/login` without it.
+
+`ACCESS_MODE` decides who gets through:
+
+| Value | Who can sign in | Landing page |
+| --- | --- | --- |
+| `admin` (default) | only emails in `ADMIN_EMAILS` | private |
+| `cohort` | anyone on the roster with the code | public |
+
+The mode is re-checked on every request, so tightening it locks out sessions that were issued
+while the site was open. Set `COHORT_ACCESS_CODE` and `AUTH_SECRET` in your host's environment
+variables — without them the app falls back to a development-only code and secret.
+
+**After Supabase** — the gate is bypassed entirely: sign-in becomes a one-time link emailed to
+the ISB address, and RLS enforces the same roster rule inside the database.
+
 ## Deploying to Netlify
 
 `netlify.toml` and `@netlify/plugin-nextjs` are already configured — the plugin runs the App

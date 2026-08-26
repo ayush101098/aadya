@@ -1,19 +1,17 @@
 import Link from "next/link";
 import { LoginForm } from "@/components/LoginForm";
+import { GateForm } from "@/components/GateForm";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { accessMode } from "@/lib/session";
 import { one, type SearchParams } from "@/lib/params";
 
 export default async function LoginPage({ searchParams }: { searchParams: SearchParams }) {
   const params = await searchParams;
-  const next = one(params, "next") ?? "/";
+  const next = one(params, "next") ?? "/home";
+  const adminOnly = accessMode() === "admin";
 
   return (
     <div className="relative w-full max-w-sm animate-fade-up">
-      <Link href="/" className="mb-8 flex items-center gap-2 text-ink-400 hover:text-ink-200">
-        <span aria-hidden>←</span>
-        <span className="text-xs tracking-wide">Back to Beer &amp; Books</span>
-      </Link>
-
       <div className="flex items-center gap-2.5">
         <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-amber-200 to-amber-500 text-lg shadow-glow">
           📚
@@ -22,31 +20,37 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
           Beer <span className="text-amber-300">&amp;</span> Books
         </h1>
       </div>
+
       <p className="mt-3 text-sm text-ink-400">
-        Private to our cohort — people, resources, opportunities and help. Sign in with the email
-        your admin added.
+        Private to the ISB PGP PRO 2027 cohort — people, opportunities, resources and help.
       </p>
+
+      {one(params, "denied") === "1" && (
+        <p className="mt-5 rounded-lg border border-amber-300/25 bg-amber-300/10 p-3 text-sm text-amber-100">
+          The site is in setup mode — only admins can get in until it opens to the batch.
+        </p>
+      )}
 
       <div className="glass mt-7 p-5">
         {isSupabaseConfigured ? (
           <LoginForm next={next} />
         ) : (
-          <div className="space-y-3 text-sm text-ink-300">
-            <p className="font-semibold text-white">Running in demo mode.</p>
-            <p>
-              No Supabase keys are set, so the app is using seed data and login is skipped. Add
-              <code className="mx-1 rounded bg-white/10 px-1 text-amber-200">NEXT_PUBLIC_SUPABASE_URL</code>
-              and
-              <code className="mx-1 rounded bg-white/10 px-1 text-amber-200">NEXT_PUBLIC_SUPABASE_ANON_KEY</code>
-              to <code className="rounded bg-white/10 px-1 text-amber-200">.env.local</code> to switch on real
-              authentication.
-            </p>
-            <Link href="/home" className="btn-amber w-full">
-              Enter the demo <span aria-hidden>→</span>
-            </Link>
-          </div>
+          <GateForm next={next} adminOnly={adminOnly} />
         )}
       </div>
+
+      {!isSupabaseConfigured && (
+        <p className="mt-5 text-xs leading-relaxed text-ink-500">
+          Running on the interim access gate. Once Supabase is connected, sign-in becomes a
+          one-time link emailed to your ISB address and the code goes away.
+        </p>
+      )}
+
+      {accessMode() === "cohort" && (
+        <Link href="/" className="mt-6 inline-flex items-center gap-2 text-xs text-ink-400 hover:text-ink-200">
+          <span aria-hidden>←</span> Back to the landing page
+        </Link>
+      )}
     </div>
   );
 }

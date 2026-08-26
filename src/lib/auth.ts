@@ -4,21 +4,23 @@ import { redirect } from "next/navigation";
 import type { Person } from "@/lib/types";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { SESSION_COOKIE, accessMode, readSessionValue } from "@/lib/session";
 import { loadPeople } from "@/lib/data";
-
-export const DEMO_USER_COOKIE = "cf_demo_user";
 
 /**
  * The signed-in cohort member, or null.
- * In demo mode this is whichever seed member the demo switcher has selected.
+ *
+ * Without Supabase the identity comes from the signed access-gate cookie; with Supabase
+ * it comes from the auth session. Either way the person must be on the roster.
  */
 export const getCurrentUser = cache(async (): Promise<Person | null> => {
   const people = await loadPeople();
 
   if (!isSupabaseConfigured) {
     const cookieStore = await cookies();
-    const selected = cookieStore.get(DEMO_USER_COOKIE)?.value;
-    return people.find((p) => p.id === selected) ?? people[0] ?? null;
+    const email = await readSessionValue(cookieStore.get(SESSION_COOKIE)?.value);
+    if (!email) return null;
+    return people.find((p) => p.email.toLowerCase() === email) ?? null;
   }
 
   const supabase = await createSupabaseServerClient();
@@ -38,6 +40,11 @@ export const getCurrentUser = cache(async (): Promise<Person | null> => {
 export async function requireUser(): Promise<Person> {
   const user = await getCurrentUser();
   if (!user) redirect(isSupabaseConfigured ? "/pending" : "/login");
+  // Re-checked on every request, so tightening ACCESS_MODE locks out sessions
+  // that were issued while the site was open.
+  if (!isSupabaseConfigured && accessMode() === "admin" && user.role !== "admin") {
+    redirect("/login?denied=1");
+  }
   return user;
 }
 

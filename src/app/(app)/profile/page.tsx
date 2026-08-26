@@ -2,7 +2,6 @@ import Link from "next/link";
 import { requireUser } from "@/lib/auth";
 import { ProfileEditor } from "@/components/ProfileEditor";
 import { signOutAction } from "@/app/actions";
-import { isSupabaseConfigured } from "@/lib/supabase/config";
 
 export default async function MyProfilePage() {
   const user = await requireUser();
@@ -20,13 +19,11 @@ export default async function MyProfilePage() {
           <Link href={`/people/${user.id}`} className="btn-secondary">
             View public profile
           </Link>
-          {isSupabaseConfigured && (
-            <form action={signOutAction}>
-              <button type="submit" className="btn-ghost">
-                Sign out
-              </button>
-            </form>
-          )}
+          <form action={signOutAction}>
+            <button type="submit" className="btn-ghost">
+              Sign out
+            </button>
+          </form>
         </div>
       </header>
 

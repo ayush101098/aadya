@@ -3,7 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { DEMO_USER_COOKIE, getCurrentUser, requireUser } from "@/lib/auth";
+import { getCurrentUser, requireUser } from "@/lib/auth";
+import { SESSION_COOKIE, accessCode, accessMode, createSessionValue } from "@/lib/session";
+import { loadPeople } from "@/lib/data";
 import { parseTags } from "@/lib/format";
 import {
   addMember,
@@ -24,11 +26,46 @@ const list = (data: FormData, key: string) =>
 
 export type ActionState = { error?: string; ok?: boolean };
 
-export async function switchDemoUser(formData: FormData) {
-  const id = str(formData, "userId");
+/**
+ * Access gate used until Supabase auth is switched on: the email must be on the cohort
+ * roster and the person must know the shared access code. While ACCESS_MODE is "admin"
+ * only admins get through, so the site stays private while it is being set up.
+ */
+export async function signInAction(
+  _prev: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const email = str(formData, "email").toLowerCase();
+  const code = str(formData, "code");
+
+  if (!email.endsWith("@isb.edu")) {
+    return { error: "Use your ISB address — that's what the cohort list is keyed on." };
+  }
+
+  const people = await loadPeople();
+  const member = people.find((p) => p.email.toLowerCase() === email);
+  if (!member) {
+    return { error: "That address isn't on the cohort list. Ask an admin to add you." };
+  }
+  if (code !== accessCode()) {
+    return { error: "That access code isn't right." };
+  }
+  if (accessMode() === "admin" && member.role !== "admin") {
+    return {
+      error:
+        "The site is still in setup — only admins can sign in right now. You'll get access when it opens to the batch.",
+    };
+  }
+
   const cookieStore = await cookies();
-  cookieStore.set(DEMO_USER_COOKIE, id, { path: "/", maxAge: 60 * 60 * 24 * 30 });
-  revalidatePath("/", "layout");
+  cookieStore.set(SESSION_COOKIE, await createSessionValue(email), {
+    path: "/",
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 60 * 60 * 24 * 30,
+  });
+  redirect(str(formData, "next") || "/home");
 }
 
 export async function addResourceAction(
@@ -215,6 +252,9 @@ export async function adminSetRoleAction(formData: FormData) {
 }
 
 export async function signOutAction() {
+  const cookieStore = await cookies();
+  cookieStore.delete(SESSION_COOKIE);
+
   const { isSupabaseConfigured } = await import("@/lib/supabase/config");
   if (isSupabaseConfigured) {
     const { createSupabaseServerClient } = await import("@/lib/supabase/server");
