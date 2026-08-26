@@ -113,24 +113,29 @@ export const LOOKING_FOR = [
   "Case competition teammate",
 ] as const;
 
+/**
+ * Aligned to a top-tier MBA curriculum: the core course sequence first, then the
+ * electives people actually recruit on, then the recruiting tracks themselves.
+ */
 export const RESOURCE_CATEGORIES = [
-  "Academics",
-  "Interview Prep",
-  "Finance",
-  "Consulting",
+  "Core Curriculum",
+  "Financial Accounting",
+  "Corporate Finance",
+  "Managerial Economics",
   "Marketing",
+  "Operations & Supply Chain",
   "Strategy",
-  "Operations",
-  "Analytics",
-  "Product",
-  "Technology",
-  "AI",
-  "Entrepreneurship",
-  "Career",
-  "Books",
-  "Courses",
+  "Leadership & People",
+  "Analytics & Decision Sciences",
+  "Technology & AI",
+  "Entrepreneurship & VC",
+  "Investments & Markets",
+  "Consulting Prep",
+  "Finance Prep",
+  "Product Management",
+  "Careers & Networking",
   "Case Studies",
-  "Other",
+  "Books",
 ] as const;
 
 export const OPPORTUNITY_TYPES = [
