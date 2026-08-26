@@ -37,8 +37,8 @@ export function GateForm({ next, adminOnly }: { next: string; adminOnly: boolean
 
       {state.error && <p className="text-sm text-rose-300">{state.error}</p>}
 
-      <SubmitButton className="btn-amber w-full" pendingLabel="Checking...">
-        Enter
+      <SubmitButton className="btn-amber w-full" pendingLabel="Signing in...">
+        Sign in
       </SubmitButton>
 
       <p className="text-xs text-ink-500">

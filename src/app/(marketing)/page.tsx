@@ -55,7 +55,7 @@ export default async function LandingPage() {
   ]);
 
   const ctaHref = user ? "/home" : "/login";
-  const ctaLabel = user ? "Enter the platform" : "Sign in";
+  const ctaLabel = user ? "Go to dashboard" : "Sign in";
 
   const categoryCounts = RESOURCE_CATEGORIES.map((category) => ({
     category,
@@ -363,7 +363,7 @@ export default async function LandingPage() {
                   href="/people"
                   className="btn border border-white/12 bg-white/[0.04] px-6 py-3 text-[15px] text-ink-100 hover:-translate-y-0.5 hover:bg-white/[0.08]"
                 >
-                  Peek at the directory
+                  Browse the directory
                 </Link>
               </div>
             </div>

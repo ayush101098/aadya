@@ -289,17 +289,6 @@ export default async function HomePage() {
             </ul>
           </section>
 
-          <section className="relative overflow-hidden rounded-xl border border-ink-200 bg-ink-950 p-5 text-ink-100">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-amber-400/20 blur-2xl"
-            />
-            <p className="font-display text-lg leading-snug text-white">
-              &ldquo;If someone in the cohort knows it, has done it, or can help with it — you
-              should be able to find them.&rdquo;
-            </p>
-            <p className="mt-2 text-xs text-ink-400">The one principle this whole thing runs on.</p>
-          </section>
         </aside>
       </div>
     </div>
