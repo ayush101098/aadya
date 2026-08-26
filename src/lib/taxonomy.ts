@@ -1,0 +1,131 @@
+export const INDUSTRIES = [
+  "Finance",
+  "Consulting",
+  "Technology",
+  "FMCG",
+  "Manufacturing",
+  "Healthcare",
+  "Retail",
+  "Media",
+  "Crypto/Web3",
+  "Energy",
+  "Education",
+  "Real Estate",
+  "Logistics",
+  "Public Sector",
+] as const;
+
+export const FUNCTIONS = [
+  "Product",
+  "Finance",
+  "Marketing",
+  "Sales",
+  "Operations",
+  "Strategy",
+  "Engineering",
+  "Data",
+  "Consulting",
+  "Design",
+  "HR",
+  "Entrepreneurship",
+] as const;
+
+export const INTERESTS = [
+  "AI",
+  "Finance",
+  "Startups",
+  "Private Equity",
+  "Venture Capital",
+  "Product",
+  "Marketing",
+  "Consulting",
+  "Sports",
+  "Crypto",
+  "Public Policy",
+  "Sustainability",
+  "Writing",
+  "Design",
+] as const;
+
+export const SKILLS = [
+  "Financial modelling",
+  "Valuation",
+  "M&A",
+  "Interview preparation",
+  "Python",
+  "SQL",
+  "Excel",
+  "Product management",
+  "Consulting cases",
+  "Startup fundraising",
+  "LinkedIn networking",
+  "Public speaking",
+  "Data analysis",
+  "Machine learning",
+  "Brand marketing",
+  "Growth marketing",
+  "Supply chain",
+  "CV review",
+  "Case competitions",
+  "Design / Figma",
+] as const;
+
+export const LOOKING_FOR = [
+  "Industry switch",
+  "Function switch",
+  "Internship",
+  "Full-time opportunity",
+  "Startup collaboration",
+  "Someone to learn from",
+  "Someone to speak with",
+  "Co-founder",
+  "Case competition teammate",
+] as const;
+
+export const RESOURCE_CATEGORIES = [
+  "Academics",
+  "Interview Prep",
+  "Finance",
+  "Consulting",
+  "Marketing",
+  "Strategy",
+  "Operations",
+  "Analytics",
+  "Product",
+  "Technology",
+  "AI",
+  "Entrepreneurship",
+  "Career",
+  "Books",
+  "Courses",
+  "Case Studies",
+  "Other",
+] as const;
+
+export const OPPORTUNITY_TYPES = [
+  "Job",
+  "Internship",
+  "Referral",
+  "Project",
+  "Startup",
+  "Event",
+  "Competition",
+  "Other",
+] as const;
+
+export const CONTACT_PREFERENCES = ["Email", "WhatsApp", "LinkedIn", "Phone"] as const;
+
+export const LOCATIONS = [
+  "Bangalore",
+  "Mumbai",
+  "Delhi NCR",
+  "Hyderabad",
+  "Chennai",
+  "Pune",
+  "Kolkata",
+  "Ahmedabad",
+  "Remote",
+  "London",
+  "Singapore",
+  "Dubai",
+] as const;
