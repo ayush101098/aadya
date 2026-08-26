@@ -15,6 +15,8 @@ export type Person = {
   photo: string | null;
   bio: string;
   currentRole: string;
+  /** The cohort's own grouping of backgrounds, e.g. "Management Consulting". */
+  group: string;
   location: string;
   linkedinUrl: string | null;
   contactPreference: string;
@@ -66,6 +68,7 @@ export type HelpRequest = {
 
 export type PeopleFilters = {
   q?: string;
+  group?: string;
   industry?: string;
   function?: string;
   skill?: string;

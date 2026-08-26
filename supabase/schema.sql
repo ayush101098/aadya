@@ -1,4 +1,4 @@
--- Cohort First — schema
+-- Beer & Books — schema
 -- Run this in the Supabase SQL editor (or `supabase db push`) before seeding.
 
 create extension if not exists "pgcrypto";
@@ -11,6 +11,7 @@ create table if not exists public.users (
   photo text,
   bio text default '',
   "current_role" text default '',
+  cohort_group text default '',
   location text default '',
   linkedin_url text,
   contact_preference text default 'Email',

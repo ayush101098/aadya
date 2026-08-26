@@ -6,11 +6,12 @@ import { usePathname } from "next/navigation";
 import { SearchBar } from "./SearchBar";
 import { Avatar } from "./Avatar";
 
+// Order matters: people and opportunities are what the cohort comes here for.
 const LINKS = [
   { href: "/home", label: "Home", short: "Home", icon: "◆" },
   { href: "/people", label: "People", short: "People", icon: "◉" },
-  { href: "/resources", label: "Resources", short: "Library", icon: "▤" },
   { href: "/opportunities", label: "Opportunities", short: "Roles", icon: "▲" },
+  { href: "/resources", label: "Resources", short: "Library", icon: "▤" },
   { href: "/ask", label: "Ask the Cohort", short: "Ask", icon: "✳" },
   { href: "/profile", label: "My Profile", short: "Me", icon: "●" },
 ];
@@ -54,10 +55,10 @@ export function NavBar({
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4">
           <Link href="/home" className="group flex shrink-0 items-center gap-2">
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-amber-200 to-amber-400 text-sm shadow-soft transition-transform duration-300 group-hover:-rotate-6">
-              🍺
+              📚
             </span>
             <span className="font-display text-base font-semibold tracking-tight text-ink-950">
-              Beer <span className="text-amber-500">&amp;</span> Chill
+              Beer <span className="text-amber-500">&amp;</span> Books
             </span>
           </Link>
 

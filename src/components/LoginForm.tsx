@@ -10,6 +10,12 @@ export function LoginForm({ next }: { next: string }) {
 
   async function onSubmit(event: React.FormEvent) {
     event.preventDefault();
+    const address = email.trim().toLowerCase();
+    if (!address.endsWith("@isb.edu")) {
+      setError("Use your ISB address (…@isb.edu) — that's what the cohort list is keyed on.");
+      return;
+    }
+
     setStatus("sending");
     setError(null);
 
@@ -50,7 +56,7 @@ export function LoginForm({ next }: { next: string }) {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="you@cohort.edu"
+          placeholder="Firstname_Lastname_PGPPRO2027@isb.edu"
           className="input border-white/12 bg-white/[0.06] text-white shadow-none placeholder:text-ink-500 focus:border-amber-300/60 focus:ring-amber-300/20"
         />
       </label>
@@ -59,7 +65,7 @@ export function LoginForm({ next }: { next: string }) {
         {status === "sending" ? "Sending link..." : "Email me a sign-in link"}
       </button>
       <p className="text-xs text-ink-500">
-        Only approved cohort members can sign in. No passwords — we email you a one-time link.
+        PGP PRO 2027 cohort only. No passwords — we email you a one-time sign-in link.
       </p>
     </form>
   );

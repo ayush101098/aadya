@@ -17,9 +17,9 @@ const display = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Beer & Chill — the cohort network",
+  title: "Beer & Books — the cohort network",
   description:
-    "The private hub for our cohort: people, resources, opportunities and help. If someone here knows it, you can find them.",
+    "The private network for the ISB PGP PRO 2027 cohort: who has done what, who can help, and what is open right now.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

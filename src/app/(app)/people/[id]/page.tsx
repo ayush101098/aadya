@@ -50,6 +50,13 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
           <div className="min-w-0 flex-1">
             <h1 className="text-xl font-semibold tracking-tight text-ink-950">{person.name}</h1>
             <p className="text-sm text-ink-700">{person.currentRole}</p>
+            {person.group && (
+              <p className="mt-1.5">
+                <Link href={`/people?group=${encodeURIComponent(person.group)}`} className="tag-amber">
+                  {person.group}
+                </Link>
+              </p>
+            )}
             <p className="mt-0.5 text-sm text-ink-500">
               {person.location}
               {person.role === "admin" && (

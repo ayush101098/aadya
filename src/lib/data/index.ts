@@ -193,6 +193,7 @@ export type ProfilePatch = {
   name: string;
   bio: string;
   currentRole: string;
+  group: string;
   location: string;
   linkedinUrl: string | null;
   contactPreference: string;
@@ -211,6 +212,7 @@ export async function updateProfile(id: string, patch: ProfilePatch): Promise<vo
       name: patch.name,
       bio: patch.bio,
       currentRole: patch.currentRole,
+      group: patch.group,
       location: patch.location,
       linkedinUrl: patch.linkedinUrl,
       contactPreference: patch.contactPreference,
@@ -230,6 +232,7 @@ export async function updateProfile(id: string, patch: ProfilePatch): Promise<vo
       name: patch.name,
       bio: patch.bio,
       current_role: patch.currentRole,
+      cohort_group: patch.group,
       location: patch.location,
       linkedin_url: patch.linkedinUrl,
       contact_preference: patch.contactPreference,
@@ -300,6 +303,7 @@ export async function addMember(input: {
   name: string;
   email: string;
   currentRole: string;
+  group: string;
   location: string;
   role: "admin" | "student";
 }): Promise<void> {
@@ -311,6 +315,7 @@ export async function addMember(input: {
       photo: null,
       bio: "",
       currentRole: input.currentRole,
+      group: input.group,
       location: input.location,
       linkedinUrl: null,
       contactPreference: "Email",
@@ -329,6 +334,7 @@ export async function addMember(input: {
     name: input.name,
     email: input.email,
     current_role: input.currentRole,
+    cohort_group: input.group,
     location: input.location,
     contact_preference: "Email",
     contact_handle: input.email,

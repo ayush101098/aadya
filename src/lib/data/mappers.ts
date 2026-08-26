@@ -10,6 +10,7 @@ export function mapPerson(row: Row): Person {
     photo: row.photo ?? null,
     bio: row.bio ?? "",
     currentRole: row.current_role ?? "",
+    group: row.cohort_group ?? "",
     location: row.location ?? "",
     linkedinUrl: row.linkedin_url ?? null,
     contactPreference: row.contact_preference ?? "Email",

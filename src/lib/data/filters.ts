@@ -28,6 +28,7 @@ function personHaystack(p: Person) {
     [
       p.name,
       p.currentRole,
+      p.group,
       p.bio,
       p.location,
       ...personIndustries(p),
@@ -48,6 +49,7 @@ function matchesQuery(haystack: string, q?: string) {
 
 export function filterPeople(people: Person[], f: PeopleFilters) {
   return people.filter((p) => {
+    if (f.group && p.group !== f.group) return false;
     if (f.industry && !personIndustries(p).includes(f.industry)) return false;
     if (f.function && !personFunctions(p).includes(f.function)) return false;
     if (f.skill && !p.skills.includes(f.skill)) return false;

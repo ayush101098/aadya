@@ -1,3 +1,14 @@
+/** How the cohort introduced itself — the top-level cut of the directory. */
+export const COHORT_GROUPS = [
+  "Startups & Entrepreneurship",
+  "Banking, Finance & Investment",
+  "Management Consulting",
+  "Technology & Product",
+  "Energy & Infrastructure",
+  "Media, Comms & Services",
+  "Other Specialized",
+] as const;
+
 export const INDUSTRIES = [
   "Finance",
   "Consulting",
@@ -31,6 +42,7 @@ export const FUNCTIONS = [
 ] as const;
 
 export const INTERESTS = [
+  // Professional
   "AI",
   "Finance",
   "Startups",
@@ -39,12 +51,31 @@ export const INTERESTS = [
   "Product",
   "Marketing",
   "Consulting",
-  "Sports",
   "Crypto",
   "Public Policy",
   "Sustainability",
-  "Writing",
   "Design",
+  // Personal — this is what actually starts conversations
+  "Sports",
+  "Cricket",
+  "Football",
+  "Tennis",
+  "Badminton",
+  "Swimming",
+  "F1",
+  "MMA",
+  "Polo",
+  "Fitness",
+  "Yoga",
+  "Reading",
+  "Travel",
+  "Movies",
+  "Music",
+  "Photography",
+  "Food & coffee",
+  "Cooking & baking",
+  "Mixology",
+  "Writing",
 ] as const;
 
 export const SKILLS = [

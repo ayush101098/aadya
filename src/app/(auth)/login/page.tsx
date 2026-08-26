@@ -11,15 +11,15 @@ export default async function LoginPage({ searchParams }: { searchParams: Search
     <div className="relative w-full max-w-sm animate-fade-up">
       <Link href="/" className="mb-8 flex items-center gap-2 text-ink-400 hover:text-ink-200">
         <span aria-hidden>←</span>
-        <span className="text-xs tracking-wide">Back to Beer &amp; Chill</span>
+        <span className="text-xs tracking-wide">Back to Beer &amp; Books</span>
       </Link>
 
       <div className="flex items-center gap-2.5">
         <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-amber-200 to-amber-500 text-lg shadow-glow">
-          🍺
+          📚
         </span>
         <h1 className="font-display text-2xl tracking-tight text-white">
-          Beer <span className="text-amber-300">&amp;</span> Chill
+          Beer <span className="text-amber-300">&amp;</span> Books
         </h1>
       </div>
       <p className="mt-3 text-sm text-ink-400">

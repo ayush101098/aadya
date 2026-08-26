@@ -1,6 +1,6 @@
-# Beer & Chill
+# Beer & Books
 
-A private, lightweight hub for a ~55-person cohort: **search → discover → connect**.
+A private, lightweight hub for the ISB PGP PRO 2027 cohort (55 people): **search → discover → connect**.
 
 A public landing page sits in front (`/`); everything else lives behind sign-in.
 
@@ -30,9 +30,8 @@ npm install
 npm run dev        # http://localhost:3000
 ```
 
-With no environment variables set, the app boots in **demo mode**: 18 students, 78 resources,
-10 opportunities and 9 help requests live in memory, login is skipped, and a banner at the top
-lets you switch which seed member you're viewing as (Ananya Rao and Neha Agarwal are admins). Writes persist
+With no environment variables set, the app boots in **demo mode**: the 55-person cohort roster and 78 curated resources live in memory, login is skipped, and a banner at the top
+lets you switch which seed member you're viewing as (Aadya Singh Rathore is the seeded admin). Writes persist
 until the server restarts. This is the fastest way to test the UX.
 
 ## Going live with Supabase
@@ -74,7 +73,7 @@ Supabase (Postgres, Auth, Storage, RLS).
 ```
 src/
   app/
-    (marketing)/  the public Beer & Chill landing page
+    (marketing)/  the public Beer & Books landing page
     (auth)/       login + pending-approval screens
     (app)/        the signed-in product (home, people, resources, ...)
     actions.ts    every server action
@@ -120,6 +119,19 @@ Two notes on the brief:
   of type `Event`) rather than a separate events system, since events management is phase 2.
 * **Approving opportunity posts** — posts go live immediately; admins can close or delete them
   from `/admin`. A pre-moderation queue would slow the loop down at this size.
+
+## The cohort roster
+
+`src/lib/data/seed.ts` holds `COHORT_ROSTER` — the 55 names and ISB addresses. That list is the
+allowlist: an email must appear there (or be added from `/admin`) before a magic link gets
+someone past `/pending`. `ADMIN_EMAILS` in the same file controls who gets the admin role.
+
+Twenty members' profiles are pre-filled from their own introductions — role, employer, years,
+background group and interests. Everyone else starts blank on purpose: no background is
+inferred for anyone, they fill their own profile in at `/profile`.
+
+The opportunity board and Ask the Cohort start empty. Seeding them with invented postings on a
+platform real people are about to use would have meant fake referrals with fake deadlines.
 
 ## Importing the real cohort
 

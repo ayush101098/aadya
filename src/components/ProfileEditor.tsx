@@ -5,6 +5,7 @@ import { updateProfileAction, type ActionState } from "@/app/actions";
 import { SubmitButton } from "./SubmitButton";
 import { CheckboxGroup } from "./CheckboxGroup";
 import {
+  COHORT_GROUPS,
   CONTACT_PREFERENCES,
   FUNCTIONS,
   INDUSTRIES,
@@ -62,6 +63,15 @@ export function ProfileEditor({ person }: { person: Person }) {
               className="input"
               placeholder="MBA Candidate • ex-Product Manager"
             />
+          </label>
+          <label className="block space-y-1">
+            <span className="label">Background group</span>
+            <select name="group" defaultValue={person.group} className="input">
+              <option value="">—</option>
+              {COHORT_GROUPS.map((g) => (
+                <option key={g}>{g}</option>
+              ))}
+            </select>
           </label>
           <label className="block space-y-1">
             <span className="label">Location</span>

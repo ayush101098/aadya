@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import { adminAddMemberAction, type ActionState } from "@/app/actions";
 import { SubmitButton } from "./SubmitButton";
-import { LOCATIONS } from "@/lib/taxonomy";
+import { COHORT_GROUPS, LOCATIONS } from "@/lib/taxonomy";
 
 export function AddMemberForm() {
   const [state, action] = useActionState<ActionState, FormData>(adminAddMemberAction, {});
@@ -21,6 +21,15 @@ export function AddMemberForm() {
         <label className="block space-y-1">
           <span className="label">Current role</span>
           <input name="currentRole" className="input" placeholder="MBA Candidate" />
+        </label>
+        <label className="block space-y-1">
+          <span className="label">Background group</span>
+          <select name="group" className="input">
+            <option value="">—</option>
+            {COHORT_GROUPS.map((g) => (
+              <option key={g}>{g}</option>
+            ))}
+          </select>
         </label>
         <label className="block space-y-1">
           <span className="label">Location</span>

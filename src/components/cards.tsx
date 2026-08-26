@@ -30,8 +30,9 @@ export function PersonCard({ person }: { person: Person }) {
             {company ? ` · ${company}` : ""}
           </p>
 
-          <div className="mt-2.5">
-            <TagList items={[...industries, ...functions]} max={5} />
+          <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+            {person.group && <span className="tag-amber">{person.group}</span>}
+            <TagList items={[...industries, ...functions]} max={4} />
           </div>
 
           {person.skills.length > 0 && (

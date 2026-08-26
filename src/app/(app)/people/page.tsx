@@ -5,6 +5,7 @@ import { FilterBar } from "@/components/FilterBar";
 import { PersonCard } from "@/components/cards";
 import { EmptyState } from "@/components/EmptyState";
 import {
+  COHORT_GROUPS,
   FUNCTIONS,
   INDUSTRIES,
   INTERESTS,
@@ -21,6 +22,7 @@ export default async function PeoplePage({ searchParams }: { searchParams: Searc
 
   const results = filterPeople(people, {
     q: one(params, "q"),
+    group: one(params, "group"),
     industry: one(params, "industry"),
     function: one(params, "function"),
     skill: one(params, "skill"),
@@ -42,6 +44,7 @@ export default async function PeoplePage({ searchParams }: { searchParams: Searc
         placeholder="Name, company, skill, interest..."
         resultCount={results.length}
         filters={[
+          { name: "group", label: "Background", options: COHORT_GROUPS },
           { name: "industry", label: "Industry", options: INDUSTRIES },
           { name: "function", label: "Function", options: FUNCTIONS },
           { name: "skill", label: "Can help with", options: SKILLS },

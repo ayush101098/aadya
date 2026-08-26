@@ -21,18 +21,18 @@ const QUICK_ACTIONS = [
     tone: "from-accent-50 to-white border-accent-200/70",
   },
   {
-    href: "/resources?new=1",
-    title: "Share a resource",
-    hint: "Notes, guides, templates",
-    icon: "▤",
-    tone: "from-amber-50 to-white border-amber-200/70",
-  },
-  {
     href: "/opportunities?new=1",
     title: "Post an opportunity",
     hint: "Jobs, referrals, projects",
     icon: "▲",
     tone: "from-emerald-50 to-white border-emerald-200/70",
+  },
+  {
+    href: "/resources?new=1",
+    title: "Share a resource",
+    hint: "Notes, guides, templates",
+    icon: "▤",
+    tone: "from-amber-50 to-white border-amber-200/70",
   },
   {
     href: "/ask?new=1",
@@ -43,7 +43,7 @@ const QUICK_ACTIONS = [
   },
 ];
 
-const SUGGESTED = ["Private Equity", "Consulting cases", "Python", "FMCG", "Product", "M&A"];
+const SUGGESTED = ["Consulting", "Product", "Startups", "Energy", "Finance", "F1"];
 
 export default async function HomePage() {
   const user = await requireUser();
@@ -178,24 +178,6 @@ export default async function HomePage() {
         <div className="space-y-6 lg:col-span-2">
           <section className="space-y-3">
             <div className="flex items-baseline justify-between">
-              <h2 className="section-title">Latest resources</h2>
-              <Link href="/resources" className="link-arrow">
-                View all <span aria-hidden>→</span>
-              </Link>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {latestResources.map((resource) => (
-                <ResourceCard
-                  key={resource.id}
-                  resource={resource}
-                  uploader={byId.get(resource.uploadedBy)}
-                />
-              ))}
-            </div>
-          </section>
-
-          <section className="space-y-3">
-            <div className="flex items-baseline justify-between">
               <h2 className="section-title">Latest opportunities</h2>
               <Link href="/opportunities" className="link-arrow">
                 View all <span aria-hidden>→</span>
@@ -207,6 +189,24 @@ export default async function HomePage() {
                   key={opportunity.id}
                   opportunity={opportunity}
                   poster={byId.get(opportunity.postedBy)}
+                />
+              ))}
+            </div>
+          </section>
+
+          <section className="space-y-3">
+            <div className="flex items-baseline justify-between">
+              <h2 className="section-title">Latest resources</h2>
+              <Link href="/resources" className="link-arrow">
+                View all <span aria-hidden>→</span>
+              </Link>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {latestResources.map((resource) => (
+                <ResourceCard
+                  key={resource.id}
+                  resource={resource}
+                  uploader={byId.get(resource.uploadedBy)}
                 />
               ))}
             </div>

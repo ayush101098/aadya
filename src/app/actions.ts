@@ -142,6 +142,7 @@ export async function updateProfileAction(
     name,
     bio: str(formData, "bio"),
     currentRole: str(formData, "currentRole"),
+    group: str(formData, "group"),
     location: str(formData, "location"),
     linkedinUrl: str(formData, "linkedinUrl") || null,
     contactPreference: str(formData, "contactPreference") || "Email",
@@ -189,6 +190,7 @@ export async function adminAddMemberAction(
     name,
     email,
     currentRole: str(formData, "currentRole"),
+    group: str(formData, "group"),
     location: str(formData, "location"),
     role: str(formData, "role") === "admin" ? "admin" : "student",
   });

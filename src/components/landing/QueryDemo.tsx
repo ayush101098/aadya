@@ -9,35 +9,35 @@ type Demo = {
 
 const DEMOS: Demo[] = [
   {
-    query: "Who knows about M&A?",
+    query: "Who has worked in energy?",
     answers: [
-      { kind: "People", label: "Kabir Shah", detail: "ChrysCapital · 2 healthcare deals" },
-      { kind: "People", label: "Ananya Rao", detail: "Kotak IB · sell-side processes" },
-      { kind: "Resource", label: "PE Deal Diligence Checklist", detail: "Finance · 4 min read" },
+      { kind: "People", label: "Shrawani Kalita", detail: "Energy Market Consultant · Schneider Electric" },
+      { kind: "People", label: "Sagar Vakharia", detail: "Sr. Program Manager · Ampyr Energy" },
+      { kind: "Resource", label: "MITx supply chain courses", detail: "Operations · audit free" },
     ],
   },
   {
-    query: "Who has worked in FMCG?",
+    query: "Who has founded something?",
     answers: [
-      { kind: "People", label: "Meera Iyer", detail: "P&G · two national launches" },
-      { kind: "People", label: "Sneha Kulkarni", detail: "Bain · FMCG & retail clients" },
-      { kind: "Opportunity", label: "Unilever Ideatrophy", detail: "Competition · closes 2 Sep" },
+      { kind: "People", label: "Dhruv Kapur", detail: "Co-Founder & Product Head · CardByte AI" },
+      { kind: "People", label: "Ayushi Sharma", detail: "Founder · Etehas, sustainable fashion" },
+      { kind: "People", label: "Shourya Raj Gupta", detail: "Founding Team · ThinkAnanta" },
     ],
   },
   {
-    query: "Who can help me with Python?",
+    query: "Consulting",
     answers: [
-      { kind: "People", label: "Arjun Sethi", detail: "Microsoft · ML systems" },
-      { kind: "Resource", label: "Python for Business Analytics", detail: "6 starter notebooks" },
-      { kind: "Ask", label: "Anyone good at Python?", detail: "Open · posted 1d ago" },
+      { kind: "People", label: "Prashant Sarbahi", detail: "Manager, Strategy Consulting · Deloitte" },
+      { kind: "People", label: "Soumya Sinha", detail: "Consultant · ZS Associates" },
+      { kind: "Resource", label: "Bain case interview practice", detail: "Interview Prep · 8 resources" },
     ],
   },
   {
-    query: "Private Equity",
+    query: "Anyone else into F1?",
     answers: [
-      { kind: "People", label: "3 students", detail: "PE experience or interest" },
-      { kind: "Resource", label: "5 resources", detail: "LBO, diligence, interview prep" },
-      { kind: "Opportunity", label: "2 roles", detail: "Summer internship + referral" },
+      { kind: "People", label: "Aadya Singh Rathore", detail: "Strategic Finance Lead · ACA" },
+      { kind: "People", label: "Rohan Bahl", detail: "Marine Engineer · Anglo-Eastern" },
+      { kind: "People", label: "Shourya Raj Gupta", detail: "Founding Team · ThinkAnanta" },
     ],
   },
 ];
@@ -81,7 +81,7 @@ export function QueryDemo() {
         <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
         <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
         <span className="ml-2 text-[11px] tracking-wide text-ink-400">
-          beerandchill.app / search
+          beerandbooks.app / search
         </span>
       </div>
 
@@ -134,7 +134,7 @@ export function QueryDemo() {
             answered ? "opacity-100" : "opacity-0"
           }`}
         >
-          Answered in one search — no WhatsApp archaeology.
+          Answered in one search — not four WhatsApp groups.
         </p>
       </div>
     </div>

@@ -65,6 +65,8 @@ export default async function LandingPage() {
     .sort((a, b) => b.count - a.count);
 
   const skills = Array.from(new Set(people.flatMap((p) => p.skills))).slice(0, 14);
+  const groups = Array.from(new Set(people.map((p) => p.group).filter(Boolean)));
+  const interests = Array.from(new Set(people.flatMap((p) => p.interests))).slice(0, 18);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-ink-950 text-ink-100">
@@ -88,23 +90,23 @@ export default async function LandingPage() {
                 <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-amber-300" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-amber-300" />
               </span>
-              Private · invite-only · {people.length} members
+              ISB PGP PRO 2027 · invite-only · {people.length} members
             </div>
 
             <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.03] tracking-tight text-ink-50 sm:text-6xl lg:text-7xl">
               Beer{" "}
               <span className="text-gradient-amber animate-shimmer bg-[length:200%_auto]">&amp;</span>{" "}
-              Chill
+              Books
             </h1>
 
             <p className="mt-3 font-display text-xl italic text-amber-200/90 sm:text-2xl">
-              the cohort network that actually answers back.
+              the ISB PGP PRO 2027 cohort network.
             </p>
 
             <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-ink-300">
-              Everything your batch knows — the internships, the models, the case packs, the
-              person who has already done the exact thing you're stuck on — is scattered across
-              five WhatsApp groups and someone's Drive. This puts it in one search box.
+              Fifty-five people who have run plants, closed deals, founded companies, shipped
+              product and treated patients. Everything they know is currently spread across four
+              WhatsApp groups and someone's Drive. This puts it in one search box.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -140,12 +142,8 @@ export default async function LandingPage() {
             {[
               { value: people.length, label: "Cohort members", suffix: "" },
               { value: resources.length, label: "Resources", suffix: "" },
+              { value: groups.length, label: "Backgrounds", suffix: "" },
               { value: opportunities.length, label: "Live opportunities", suffix: "" },
-              {
-                value: helpRequests.filter((h) => h.status === "open").length,
-                label: "Open requests",
-                suffix: "",
-              },
             ].map((stat) => (
               <div key={stat.label} className="px-5 py-6 text-center">
                 <p className="font-display text-3xl text-ink-50 sm:text-4xl">
@@ -211,18 +209,6 @@ export default async function LandingPage() {
               href: "/people",
             },
             {
-              icon: "📚",
-              eyebrow: "Resources",
-              title: "A library built for MBA terms",
-              body: "Course notes, modelling templates, case packs, and the courses actually worth finishing.",
-              points: [
-                `${resources.length} resources across ${categoryCounts.length} categories`,
-                "Every entry tagged, searchable and credited",
-                "Anyone can add in fifteen seconds",
-              ],
-              href: "/resources",
-            },
-            {
               icon: "🚀",
               eyebrow: "Opportunities",
               title: "Referrals before they hit the portal",
@@ -235,9 +221,21 @@ export default async function LandingPage() {
               href: "/opportunities",
             },
             {
+              icon: "📚",
+              eyebrow: "Resources",
+              title: "A library built for MBA terms",
+              body: "Course notes, modelling templates, case packs, and the courses actually worth finishing.",
+              points: [
+                `${resources.length} resources across ${categoryCounts.length} categories`,
+                "Every entry tagged, searchable and credited",
+                "Anyone can add in fifteen seconds",
+              ],
+              href: "/resources",
+            },
+            {
               icon: "🙋",
               eyebrow: "Ask the Cohort",
-              title: "Put the question to 55 people at once",
+              title: "Put the question to the whole batch at once",
               body: "The lightweight ask board: post what you need, mark it resolved when someone shows up.",
               points: [
                 "Tagged so the right person finds it",
@@ -257,13 +255,32 @@ export default async function LandingPage() {
       {/* --------------------------------------------------------- library */}
       <section id="library" className="relative mx-auto max-w-6xl scroll-mt-24 px-4 py-20">
         <Reveal>
-          <p className="section-title text-amber-300/80">The library</p>
+          <p className="section-title text-amber-300/80">The batch</p>
           <h2 className="mt-3 max-w-2xl font-display text-4xl leading-tight text-ink-50">
-            Tailored to the courses you're actually taking.
+            Seven backgrounds, one directory.
           </h2>
           <p className="mt-3 max-w-xl text-sm text-ink-400">
-            Corporate finance, marketing management, operations, strategy, analytics — plus the
-            recruiting stack: cases, modelling, product, and the interview banks.
+            Founders, bankers, consultants, engineers, an orthodontist and a marine engineer —
+            plus a library tuned to the courses you're actually taking.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-2.5">
+            {groups.map((group) => (
+              <Link
+                key={group}
+                href={`/people?group=${encodeURIComponent(group)}`}
+                className="group inline-flex items-center gap-2 rounded-full border border-amber-300/25 bg-amber-300/[0.07] px-4 py-2 text-sm text-amber-100 transition-all duration-300 hover:-translate-y-0.5 hover:border-amber-300/50 hover:bg-amber-300/15"
+              >
+                {group}
+                <span className="rounded-full bg-white/10 px-1.5 text-[11px]">
+                  {people.filter((p) => p.group === group).length}
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          <p className="mt-10 text-[11px] uppercase tracking-[.16em] text-ink-500">
+            The library, by category
           </p>
         </Reveal>
 
@@ -286,18 +303,36 @@ export default async function LandingPage() {
         <Reveal delay={120}>
           <div className="mt-10 glass p-6">
             <p className="text-[11px] uppercase tracking-[.16em] text-ink-500">
-              What the cohort can help with right now
+              What the cohort is into — outside work as much as in it
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-ink-300"
+              {interests.map((interest) => (
+                <Link
+                  key={interest}
+                  href={`/people?interest=${encodeURIComponent(interest)}`}
+                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-ink-300 transition-colors hover:border-amber-300/40 hover:text-white"
                 >
-                  {skill}
-                </span>
+                  {interest}
+                </Link>
               ))}
             </div>
+            {skills.length > 0 && (
+              <>
+                <p className="mt-6 text-[11px] uppercase tracking-[.16em] text-ink-500">
+                  What people have offered to help with
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-ink-300"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </Reveal>
       </section>
@@ -317,7 +352,7 @@ export default async function LandingPage() {
                 <span className="text-gradient-amber">a cohort that compounds.</span>
               </p>
               <p className="mx-auto mt-4 max-w-lg text-sm text-ink-400">
-                Beer &amp; Chill is private to our batch. Sign in with your cohort email — an
+                Beer &amp; Books is private to our batch. Sign in with your cohort email — an
                 admin adds you once and you're in for good.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -339,7 +374,7 @@ export default async function LandingPage() {
       <footer className="relative border-t border-white/[0.07]">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-8 text-xs text-ink-500">
           <span className="font-display text-sm text-ink-300">
-            Beer <span className="text-amber-300">&amp;</span> Chill
+            Beer <span className="text-amber-300">&amp;</span> Books
           </span>
           <span className="hidden sm:inline">·</span>
           <span>Built by the cohort, for the cohort.</span>
