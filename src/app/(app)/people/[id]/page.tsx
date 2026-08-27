@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { requireUser } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 import {
   getPerson,
   loadHelpRequests,
@@ -23,7 +23,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
-  const viewer = await requireUser();
+  const viewer = await getCurrentUser();
   const { id } = await params;
   const person = await getPerson(id);
   if (!person) notFound();
@@ -66,7 +66,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
             {person.bio && <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-700">{person.bio}</p>}
           </div>
           <div className="sm:w-64 sm:shrink-0">
-            {viewer.id === person.id ? (
+            {viewer?.id === person.id ? (
               <Link href="/profile" className="btn-secondary w-full">
                 Edit my profile
               </Link>

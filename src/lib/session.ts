@@ -10,13 +10,17 @@ export const SESSION_COOKIE = "bb_session";
 const encoder = new TextEncoder();
 
 /**
- * "admin"  — only ADMIN_EMAILS can get in (the default while the site is being set up)
- * "cohort" — anyone on the roster with the access code can get in
+ * "open"   — no gate: anyone with the link can read the site. Signing in is only
+ *            needed to post or to edit your own profile. (Current default.)
+ * "cohort" — anyone on the roster with the access code can get in; nothing is public
+ * "admin"  — only ADMIN_EMAILS can get in, for setup
  */
-export type AccessMode = "admin" | "cohort";
+export type AccessMode = "open" | "cohort" | "admin";
 
 export function accessMode(): AccessMode {
-  return process.env.ACCESS_MODE === "cohort" ? "cohort" : "admin";
+  const mode = process.env.ACCESS_MODE;
+  if (mode === "admin" || mode === "cohort") return mode;
+  return "open";
 }
 
 export function accessCode(): string {

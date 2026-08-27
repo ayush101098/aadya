@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireUser } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 import { loadPeople, searchEverything } from "@/lib/data";
 import { SearchBar } from "@/components/SearchBar";
 import {
@@ -41,7 +41,7 @@ function ResultSection({
 }
 
 export default async function SearchPage({ searchParams }: { searchParams: SearchParams }) {
-  await requireUser();
+  await getCurrentUser();
   const params = await searchParams;
   const query = one(params, "q") ?? "";
 

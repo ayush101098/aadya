@@ -1,4 +1,5 @@
-import { requireUser } from "@/lib/auth";
+import Link from "next/link";
+import { getCurrentUser } from "@/lib/auth";
 import { loadOpportunities, loadPeople } from "@/lib/data";
 import { byNewest, filterOpportunities } from "@/lib/data/filters";
 import { FilterBar } from "@/components/FilterBar";
@@ -14,7 +15,7 @@ export default async function OpportunitiesPage({
 }: {
   searchParams: SearchParams;
 }) {
-  await requireUser();
+  const user = await getCurrentUser();
   const params = await searchParams;
   const [opportunities, people] = await Promise.all([loadOpportunities(), loadPeople()]);
   const byId = new Map(people.map((p) => [p.id, p]));
@@ -36,9 +37,15 @@ export default async function OpportunitiesPage({
             for official placement services.
           </p>
         </div>
-        <Collapsible label="Post an opportunity" defaultOpen={one(params, "new") === "1"}>
-          <AddOpportunityForm />
-        </Collapsible>
+        {user ? (
+          <Collapsible label="Post an opportunity" defaultOpen={one(params, "new") === "1"}>
+            <AddOpportunityForm />
+          </Collapsible>
+        ) : (
+          <Link href="/login" className="btn-secondary">
+            Sign in to post
+          </Link>
+        )}
       </header>
 
       <FilterBar

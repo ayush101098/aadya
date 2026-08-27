@@ -25,14 +25,15 @@ export function NavBar({
   userPhoto,
   isAdmin,
 }: {
-  userName: string;
+  userName: string | null;
   userPhoto: string | null;
   isAdmin: boolean;
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const links = isAdmin ? [...LINKS, { href: "/admin", label: "Admin", short: "Admin", icon: "⚙" }] : LINKS;
+  const visible = userName ? LINKS : LINKS.filter((l) => l.href !== "/profile");
+  const links = isAdmin ? [...visible, { href: "/admin", label: "Admin", short: "Admin", icon: "⚙" }] : visible;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -85,13 +86,19 @@ export function NavBar({
             <SearchBar size="sm" placeholder="Search the cohort..." />
           </div>
 
-          <Link
-            href="/profile"
-            title={userName}
-            className="ml-auto shrink-0 rounded-full ring-2 ring-transparent transition hover:ring-amber-300 md:ml-0"
-          >
-            <Avatar name={userName} photo={userPhoto} size="sm" />
-          </Link>
+          {userName ? (
+            <Link
+              href="/profile"
+              title={userName}
+              className="ml-auto shrink-0 rounded-full ring-2 ring-transparent transition hover:ring-amber-300 md:ml-0"
+            >
+              <Avatar name={userName} photo={userPhoto} size="sm" />
+            </Link>
+          ) : (
+            <Link href="/login" className="btn-primary ml-auto shrink-0 py-1.5 text-xs md:ml-0">
+              Sign in
+            </Link>
+          )}
 
           <button
             type="button"
@@ -133,7 +140,7 @@ export function NavBar({
       </header>
 
       <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-ink-200 bg-white/95 backdrop-blur-xl sm:hidden">
-        {LINKS.slice(0, 5).map((link) => (
+        {visible.slice(0, 5).map((link) => (
           <Link
             key={link.href}
             href={link.href}

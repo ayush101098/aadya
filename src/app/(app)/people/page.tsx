@@ -1,4 +1,4 @@
-import { requireUser } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 import { loadPeople } from "@/lib/data";
 import { filterPeople } from "@/lib/data/filters";
 import { FilterBar } from "@/components/FilterBar";
@@ -16,7 +16,7 @@ import {
 import { one, type SearchParams } from "@/lib/params";
 
 export default async function PeoplePage({ searchParams }: { searchParams: SearchParams }) {
-  await requireUser();
+  await getCurrentUser();
   const params = await searchParams;
   const people = await loadPeople();
 

@@ -1,4 +1,5 @@
-import { requireUser } from "@/lib/auth";
+import Link from "next/link";
+import { getCurrentUser } from "@/lib/auth";
 import { loadHelpRequests, loadPeople } from "@/lib/data";
 import { byNewest, filterHelpRequests } from "@/lib/data/filters";
 import { FilterBar } from "@/components/FilterBar";
@@ -10,7 +11,7 @@ import { toggleHelpStatusAction } from "@/app/actions";
 import { one, type SearchParams } from "@/lib/params";
 
 export default async function AskPage({ searchParams }: { searchParams: SearchParams }) {
-  const user = await requireUser();
+  const user = await getCurrentUser();
   const params = await searchParams;
   const [requests, people] = await Promise.all([loadHelpRequests(), loadPeople()]);
   const byId = new Map(people.map((p) => [p.id, p]));
@@ -29,9 +30,15 @@ export default async function AskPage({ searchParams }: { searchParams: SearchPa
             Someone here has done it. Post what you need and let the cohort come to you.
           </p>
         </div>
-        <Collapsible label="Ask for help" defaultOpen={one(params, "new") === "1"}>
-          <AddHelpRequestForm />
-        </Collapsible>
+        {user ? (
+          <Collapsible label="Ask for help" defaultOpen={one(params, "new") === "1"}>
+            <AddHelpRequestForm />
+          </Collapsible>
+        ) : (
+          <Link href="/login" className="btn-secondary">
+            Sign in to ask
+          </Link>
+        )}
       </header>
 
       <FilterBar
@@ -48,7 +55,7 @@ export default async function AskPage({ searchParams }: { searchParams: SearchPa
       ) : (
         <div className="grid gap-3 md:grid-cols-2">
           {results.map((request) => {
-            const canEdit = user.role === "admin" || request.postedBy === user.id;
+            const canEdit = user?.role === "admin" || request.postedBy === user?.id;
             return (
               <HelpRequestCard
                 key={request.id}

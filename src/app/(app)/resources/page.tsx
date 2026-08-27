@@ -1,4 +1,5 @@
-import { requireUser } from "@/lib/auth";
+import Link from "next/link";
+import { getCurrentUser } from "@/lib/auth";
 import { loadPeople, loadResources } from "@/lib/data";
 import { byNewest, filterResources } from "@/lib/data/filters";
 import { FilterBar } from "@/components/FilterBar";
@@ -10,7 +11,7 @@ import { RESOURCE_CATEGORIES } from "@/lib/taxonomy";
 import { one, type SearchParams } from "@/lib/params";
 
 export default async function ResourcesPage({ searchParams }: { searchParams: SearchParams }) {
-  await requireUser();
+  const user = await getCurrentUser();
   const params = await searchParams;
   const [resources, people] = await Promise.all([loadResources(), loadPeople()]);
   const byId = new Map(people.map((p) => [p.id, p]));
@@ -29,9 +30,15 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Se
             Notes, guides, templates and courses shared by the cohort.
           </p>
         </div>
-        <Collapsible label="Share a resource" defaultOpen={one(params, "new") === "1"}>
-          <AddResourceForm />
-        </Collapsible>
+        {user ? (
+          <Collapsible label="Share a resource" defaultOpen={one(params, "new") === "1"}>
+            <AddResourceForm />
+          </Collapsible>
+        ) : (
+          <Link href="/login" className="btn-secondary">
+            Sign in to post
+          </Link>
+        )}
       </header>
 
       <FilterBar

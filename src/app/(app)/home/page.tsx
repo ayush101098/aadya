@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireUser } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 import {
   loadHelpRequests,
   loadOpportunities,
@@ -46,7 +46,7 @@ const QUICK_ACTIONS = [
 const SUGGESTED = ["Consulting", "Product", "Startups", "Energy", "Finance", "F1"];
 
 export default async function HomePage() {
-  const user = await requireUser();
+  const user = await getCurrentUser();
   const [people, resources, opportunities, helpRequests] = await Promise.all([
     loadPeople(),
     loadResources(),
@@ -65,11 +65,13 @@ export default async function HomePage() {
     .slice(0, 5);
 
   const newestMembers = [...people].sort(byNewest).slice(0, 8);
-  const profileGaps = [
-    user.skills.length === 0 && "what you can help with",
-    user.experience.length === 0 && "your experience",
-    user.lookingFor.length === 0 && "what you're looking for",
-  ].filter(Boolean) as string[];
+  const profileGaps = user
+    ? ([
+        user.skills.length === 0 && "what you can help with",
+        user.experience.length === 0 && "your experience",
+        user.lookingFor.length === 0 && "what you're looking for",
+      ].filter(Boolean) as string[])
+    : [];
 
   return (
     <div className="space-y-10">
@@ -92,10 +94,21 @@ export default async function HomePage() {
             })}
           </p>
           <h1 className="mt-1 font-display text-3xl tracking-tight text-ink-950 sm:text-4xl">
-            Welcome back, <span className="text-gradient-ink">{user.name.split(" ")[0]}</span>.
+            {user ? (
+              <>
+                Welcome back,{" "}
+                <span className="text-gradient-ink">{user.name.split(" ")[0]}</span>.
+              </>
+            ) : (
+              <>
+                The <span className="text-gradient-ink">PGP PRO 2027</span> cohort, in one place.
+              </>
+            )}
           </h1>
           <p className="mt-2 max-w-xl text-sm text-ink-600">
-            Ask the cohort anything — someone here has already done it.
+            {user
+              ? "Ask the cohort anything — someone here has already done it."
+              : "Browse the directory, the library and the boards. Sign in when you want to post or edit your profile."}
           </p>
 
           <div className="mt-5 max-w-2xl">

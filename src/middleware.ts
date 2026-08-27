@@ -12,9 +12,14 @@ function isOpen(path: string) {
 export async function middleware(request: NextRequest) {
   if (isSupabaseConfigured) return updateSession(request);
 
+  const mode = accessMode();
+  // Open mode: the whole site is readable without a session. Server actions still
+  // check for a signed-in member before they write anything.
+  if (mode === "open") return NextResponse.next();
+
   const path = request.nextUrl.pathname;
   // The landing page is public only once the site is open to the whole cohort.
-  const publicPath = isOpen(path) || (path === "/" && accessMode() === "cohort");
+  const publicPath = isOpen(path) || (path === "/" && mode === "cohort");
   if (publicPath) return NextResponse.next();
 
   const email = await readSessionValue(request.cookies.get(SESSION_COOKIE)?.value);

@@ -54,8 +54,9 @@ export default async function LandingPage() {
     loadHelpRequests(),
   ]);
 
-  const ctaHref = user ? "/home" : "/login";
-  const ctaLabel = user ? "Go to dashboard" : "Sign in";
+  // The site is readable without an account, so the landing CTA always goes inside.
+  const ctaHref = "/home";
+  const ctaLabel = user ? "Go to dashboard" : "Explore the cohort";
 
   const categoryCounts = RESOURCE_CATEGORIES.map((category) => ({
     category,
@@ -352,8 +353,8 @@ export default async function LandingPage() {
                 <span className="text-gradient-amber">a cohort that compounds.</span>
               </p>
               <p className="mx-auto mt-4 max-w-lg text-sm text-ink-400">
-                Beer &amp; Books is private to our batch. Sign in with your cohort email — an
-                admin adds you once and you're in for good.
+                Browse the directory, the library and the boards freely. Sign in with your ISB
+                email when you want to post an opportunity or fill in your own profile.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <Link href={ctaHref} className="btn-amber px-6 py-3 text-[15px]">
