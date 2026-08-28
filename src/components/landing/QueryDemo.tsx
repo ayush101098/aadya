@@ -81,7 +81,7 @@ export function QueryDemo() {
         <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
         <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
         <span className="ml-2 text-[11px] tracking-wide text-ink-400">
-          beerandbooks.app / search
+          coup.app / search
         </span>
       </div>
 

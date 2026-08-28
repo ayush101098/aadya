@@ -95,9 +95,7 @@ export default async function LandingPage() {
             </div>
 
             <h1 className="mt-6 font-display text-5xl font-semibold leading-[1.03] tracking-tight text-ink-50 sm:text-6xl lg:text-7xl">
-              Beer{" "}
-              <span className="text-gradient-amber animate-shimmer bg-[length:200%_auto]">&amp;</span>{" "}
-              Books
+              <span className="text-gradient-amber animate-shimmer bg-[length:200%_auto]">Coup</span>
             </h1>
 
             <p className="mt-3 font-display text-xl italic text-amber-200/90 sm:text-2xl">
@@ -375,7 +373,7 @@ export default async function LandingPage() {
       <footer className="relative border-t border-white/[0.07]">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-8 text-xs text-ink-500">
           <span className="font-display text-sm text-ink-300">
-            Beer <span className="text-amber-300">&amp;</span> Books
+            Coup
           </span>
           <span className="hidden sm:inline">·</span>
           <span>Built by the cohort, for the cohort.</span>

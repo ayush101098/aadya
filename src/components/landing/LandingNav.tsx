@@ -22,10 +22,10 @@ export function LandingNav({ ctaHref, ctaLabel }: { ctaHref: string; ctaLabel: s
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-4">
         <Link href="/" className="flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-amber-200 to-amber-500 text-sm">
-            📚
+            👑
           </span>
           <span className="font-display text-lg font-semibold tracking-tight text-ink-50">
-            Beer <span className="text-amber-300">&amp;</span> Books
+            Coup
           </span>
         </Link>
 

@@ -56,10 +56,10 @@ export function NavBar({
         <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4">
           <Link href="/home" className="group flex shrink-0 items-center gap-2">
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-amber-200 to-amber-400 text-sm shadow-soft transition-transform duration-300 group-hover:-rotate-6">
-              📚
+              👑
             </span>
             <span className="font-display text-base font-semibold tracking-tight text-ink-950">
-              Beer <span className="text-amber-500">&amp;</span> Books
+              Coup
             </span>
           </Link>
 

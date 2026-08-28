@@ -1,4 +1,4 @@
-# Beer & Books
+# Coup
 
 A private, lightweight hub for the ISB PGP PRO 2027 cohort (55 people): **search → discover → connect**.
 
@@ -73,7 +73,7 @@ Supabase (Postgres, Auth, Storage, RLS).
 ```
 src/
   app/
-    (marketing)/  the public Beer & Books landing page
+    (marketing)/  the public Coup landing page
     (auth)/       login + pending-approval screens
     (app)/        the signed-in product (home, people, resources, ...)
     actions.ts    every server action

@@ -24,7 +24,7 @@ export function accessMode(): AccessMode {
 }
 
 export function accessCode(): string {
-  return process.env.COHORT_ACCESS_CODE ?? "beer-and-books";
+  return process.env.COHORT_ACCESS_CODE ?? "coup";
 }
 
 function secret(): string {

@@ -17,7 +17,7 @@ const display = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Beer & Books — the cohort network",
+  title: "Coup — the cohort network",
   description:
     "The private network for the ISB PGP PRO 2027 cohort: who has done what, who can help, and what is open right now.",
 };

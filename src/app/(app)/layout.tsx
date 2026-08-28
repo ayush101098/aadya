@@ -17,7 +17,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       />
       <main className="mx-auto max-w-6xl px-4 pb-28 pt-6 sm:pb-16">{children}</main>
       <footer className="mx-auto max-w-6xl px-4 pb-24 pt-4 text-xs text-ink-400 sm:pb-8">
-        Beer &amp; Books — built by the cohort, for the cohort. Not a replacement for official
+        Coup — built by the cohort, for the cohort. Not a replacement for official
         placement services.
       </footer>
     </div>

@@ -1,4 +1,4 @@
--- Beer & Books — schema
+-- Coup — schema
 -- Run this in the Supabase SQL editor (or `supabase db push`) before seeding.
 
 create extension if not exists "pgcrypto";
